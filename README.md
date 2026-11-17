@@ -1,32 +1,42 @@
 # PlatformIO WeMos LOLIN32
 
-Proyek Arduino untuk ESP32 WeMos LOLIN32 dengan OTA dan pengaturan Wi-Fi melalui
-halaman web lokal.
+Firmware Arduino untuk ESP32 WeMos LOLIN32 dengan OTA dan halaman konfigurasi
+Wi-Fi lokal.
 
 [![Build firmware](https://github.com/ninofelino12/platformio-WeMos-lolin-32/actions/workflows/build.yml/badge.svg)](https://github.com/ninofelino12/platformio-WeMos-lolin-32/actions/workflows/build.yml)
 [![Jalankan build](https://img.shields.io/badge/Jalankan%20build-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/ninofelino12/platformio-WeMos-lolin-32/actions/workflows/build.yml)
 
-**Download firmware:** buka tab [Actions](https://github.com/ninofelino12/platformio-WeMos-lolin-32/actions/workflows/build.yml),
-pilih build terbaru yang berhasil, lalu unduh artifact **`firmware-lolin32`**
-di bagian *Artifacts*. File hasil compile ada di `firmware.bin`. Artifact
-tersedia selama 30 hari.
+## Build dan unduh firmware
+
+GitHub Actions otomatis meng-compile firmware saat ada push atau pull request.
+Untuk menjalankan build secara manual, klik **Jalankan build** di atas, lalu
+pilih **Run workflow**.
+
+Setelah build berhasil:
+
+1. Buka tab [Actions](https://github.com/ninofelino12/platformio-WeMos-lolin-32/actions/workflows/build.yml)
+   dan pilih hasil build terbaru.
+2. Pada bagian **Artifacts**, unduh **`firmware-lolin32`**.
+3. Ekstrak file ZIP untuk mendapatkan `firmware.bin`. Artifact tersimpan selama
+   30 hari.
+
+Untuk compile lokal dengan PlatformIO, jalankan `pio run`. File firmware akan
+dibuat di `.pio/build/lolin32/firmware.bin`.
 
 ## Penggunaan
 
-1. Buka proyek ini di PlatformIO dan unggah firmware melalui USB.
-2. Secara default perangkat mencoba Wi-Fi `Repeater-9924` dengan kata sandi
+1. Unggah firmware pertama kali melalui USB.
+2. Perangkat mencoba tersambung ke Wi-Fi bawaan `Repeater-9924` dengan kata sandi
    `nino2222`.
-3. Jika tidak tersambung dalam 20 detik, perangkat membuat access point
-   `Wemos32-Setup-XXXX`. Nama access point, kata sandi acak, dan alamat halaman
-   konfigurasi (biasanya `http://192.168.4.1`) ditampilkan di Serial Monitor
-   115200 baud.
-4. Sambungkan ponsel/komputer ke access point itu, buka alamat konfigurasi,
-   lalu simpan SSID/kata sandi Wi-Fi dan konfigurasi Firebase RTDB. Kata sandi
-   atau token yang dikosongkan tidak diubah. Setelah disimpan, perangkat reboot.
-5. Setelah perangkat tersambung ke Wi-Fi, host OTA adalah `wemos-lolin32`.
-   Pilih environment PlatformIO `lolin32` untuk upload melalui jaringan.
+3. Jika gagal tersambung selama 20 detik, perangkat membuat access point
+   `Wemos32-Setup-XXXX`. Nama dan kata sandi acak access point ditampilkan di
+   Serial Monitor pada 115200 baud.
+4. Sambungkan ponsel/komputer ke access point tersebut, lalu buka
+   `http://192.168.4.1`. Isi SSID, kata sandi, dan URL/token Firebase RTDB.
+   Kolom kata sandi atau token yang kosong tidak mengubah nilai tersimpan.
+   Setelah disimpan, perangkat akan reboot.
+5. Saat tersambung ke Wi-Fi, perangkat menyediakan OTA dengan hostname
+   `wemos-lolin32`.
 
-SSID/kata sandi Wi-Fi bawaan ditetapkan di `src/main.cpp`. Pengaturan yang
-disimpan melalui halaman web menggantikan nilai bawaan dan disimpan di NVS ESP32.
-URL dan auth token RTDB hanya disimpan sebagai konfigurasi; integrasi baca/tulis
-database belum ditambahkan.
+Pengaturan disimpan di NVS ESP32. Nilai URL dan auth token RTDB disimpan sebagai
+konfigurasi; integrasi baca/tulis database belum ditambahkan.
